@@ -1,0 +1,73 @@
+[
+  {
+    "op": "add",
+    "path": "/menu/sub/options/sub/headers/sub/keyboard-only",
+    "value": {
+      "entry": { "en_US": "Keyboard Only" }
+    }
+  },
+  {
+    "op": "add",
+    "path": "/menu/sub/options/sub/actions/sub/PC/sub/labels/sub/lockOn",
+    "value": {
+      "entry": { "en_US": "Lock-On" }
+    }
+  },
+  {
+    "op": "add",
+    "path": "/menu/sub/options/sub/actions/sub/PC/sub/descriptions/sub/lockOn",
+    "value": {
+      "entry": {
+        "en_US": "Locks the camera and aim onto the closest visible enemy. Press again to cycle through enemies by distance; press at the end of the list to release the lock.\n\nThe lock automatically jumps to the closest alive enemy when the current target dies or leaves the screen.\n\n{c:2}Requires{c}: the {c:3}Lock-On{c} feature toggle in {c:3}Options → Accessibility → Keyboard Only{c}."
+      }
+    }
+  },
+  {
+    "op": "add",
+    "path": "/menu/sub/options/sub/actions/sub/PC/sub/labels/sub/aimStance",
+    "value": {
+      "entry": { "en_US": "Aim Stance" }
+    }
+  },
+  {
+    "op": "add",
+    "path": "/menu/sub/options/sub/actions/sub/PC/sub/descriptions/sub/aimStance",
+    "value": {
+      "entry": {
+        "en_US": "Hold to enter tank-style aim. The character stops moving and rotates with the moviment keys. Releasing the key fires a shot in the direction the character is facing.\n\nUseful for puzzle shooting and any situation where precise aim is needed.\n\n{c:2}Requires{c}: the {c:3}Aim Stance{c} feature toggle in {c:3}Options → Accessibility → Keyboard Only{c}."
+      }
+    }
+  },
+  {
+    "op": "add",
+    "path": "/menu/sub/options/sub/actions/sub/GAMEPAD/sub/labels/sub/lockOn",
+    "value": {
+      "entry": { "en_US": "Lock-On" }
+    }
+  },
+  {
+    "op": "add",
+    "path": "/menu/sub/options/sub/actions/sub/GAMEPAD/sub/descriptions/sub/lockOn",
+    "value": {
+      "entry": {
+        "en_US": "Locks the camera and aim onto the closest visible enemy. Unbound by default on gamepad — this mod is primarily designed for keyboard play."
+      }
+    }
+  },
+  {
+    "op": "add",
+    "path": "/menu/sub/options/sub/actions/sub/GAMEPAD/sub/labels/sub/aimStance",
+    "value": {
+      "entry": { "en_US": "Aim Stance" }
+    }
+  },
+  {
+    "op": "add",
+    "path": "/menu/sub/options/sub/actions/sub/GAMEPAD/sub/descriptions/sub/aimStance",
+    "value": {
+      "entry": {
+        "en_US": "Hold for tank-style aim. Unbound by default on gamepad — this mod is primarily designed for keyboard play."
+      }
+    }
+  }
+]

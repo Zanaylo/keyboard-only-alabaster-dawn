@@ -1,0 +1,144 @@
+[
+  {
+    "op": "add",
+    "path": "/keyboard-only-enabled",
+    "value": {
+      "debug": false,
+      "description": { "en_US": "Master switch for the Keyboard Only mod. Turn off to disable all of its features (lock-on, aim stance, menu navigation, etc.) without removing the mod.\n\nRebind the {c:3}Lock-On{c} and {c:3}Aim Stance{c} keys in {c:3}Gameplay → Mouse & Keyboard{c}, under the {c:3}Keyboard Only{c} section." },
+      "header": { "en_US": "Keyboard Only" },
+      "hidden": false,
+      "label": { "en_US": "Enable Keyboard Only Mod" },
+      "local": true,
+      "type": { "default": true, "type": "CHECKBOX" },
+      "category": "ACCESSIBILITY"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/keyboard-only-feature-lock-on",
+    "value": {
+      "debug": false,
+      "description": { "en_US": "Adds an enemy lock-on system controlled by a single key.\n\nPressing the {c:3}Lock-On{c} key locks onto the closest visible enemy. Pressing again cycles to the next enemy by distance; pressing past the last enemy releases the lock.\n\nThe lock automatically jumps to the next visible alive enemy when the current target dies or leaves the camera view." },
+      "hidden": false,
+      "label": { "en_US": "Lock-On" },
+      "local": true,
+      "type": { "default": true, "type": "CHECKBOX" },
+      "category": "ACCESSIBILITY"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/keyboard-only-feature-aim-stance",
+    "value": {
+      "debug": false,
+      "description": { "en_US": "Adds a tank-style aim mode bound to a hold key.\n\nWhile the {c:3}Aim Stance{c} key is held: the character stops moving and rotates toward the direction of the moviment keys (WASD / arrows). Releasing the key fires the shot in the direction the character is facing.\n\nUseful for puzzles and precise shots without a mouse." },
+      "hidden": false,
+      "label": { "en_US": "Aim Stance (Tank Aim)" },
+      "local": true,
+      "type": { "default": true, "type": "CHECKBOX" },
+      "category": "ACCESSIBILITY"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/keyboard-only-tank-turn-speed",
+    "value": {
+      "debug": false,
+      "description": { "en_US": "Rotation speed while holding {c:3}Aim Stance{c} and pressing the moviment keys.\n\nExpressed as a percentage of the maximum turn rate. Higher = snappier turns; lower = easier to fine-tune toward a small target." },
+      "hidden": false,
+      "label": { "en_US": "Aim Stance Turn Speed" },
+      "local": true,
+      "type": {
+        "decimals": 0,
+        "default": 45,
+        "max": 100,
+        "min": 1,
+        "step": 1,
+        "suffix": { "en_US": "%" },
+        "type": "SLIDER"
+      },
+      "category": "ACCESSIBILITY"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/keyboard-only-aim-hold-turn-speed",
+    "value": {
+      "debug": false,
+      "description": { "en_US": "Rotation speed of the aim direction while {c:3}Keyboard-Only Aim Mode{c} is on and you are holding the aim button (without lock-on and without aim stance).\n\nExpressed as a percentage of the maximum turn rate." },
+      "hidden": false,
+      "label": { "en_US": "Aim-Hold Turn Speed" },
+      "local": true,
+      "type": {
+        "decimals": 0,
+        "default": 60,
+        "max": 100,
+        "min": 1,
+        "step": 1,
+        "suffix": { "en_US": "%" },
+        "type": "SLIDER"
+      },
+      "category": "ACCESSIBILITY"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/keyboard-only-combat-art-turn-speed",
+    "value": {
+      "debug": false,
+      "description": { "en_US": "Rotation speed of the strike direction during a Combat Art (e.g. {c:3}Vapor Thrust{c}) while locked-on.\n\nExpressed as a percentage of the maximum turn rate. Higher = snappier; lower = smoother tank-style turning. Only applies while a Combat Art is being aimed/executed with a lock-on active." },
+      "hidden": false,
+      "label": { "en_US": "Combat Art Turn Speed" },
+      "local": true,
+      "type": {
+        "decimals": 0,
+        "default": 50,
+        "max": 100,
+        "min": 1,
+        "step": 1,
+        "suffix": { "en_US": "%" },
+        "type": "SLIDER"
+      },
+      "category": "ACCESSIBILITY"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/keyboard-only-feature-interact",
+    "value": {
+      "debug": false,
+      "description": { "en_US": "Allows pressing the {c:3}Interact{c} key to interact with NPCs, chests and other objects in front of the character {c:2}without needing the mouse cursor{c} to hover over them.\n\nThe game still respects the mouse-hover path when the cursor is over a target; this option only adds the keyboard fallback." },
+      "hidden": false,
+      "label": { "en_US": "Mouseless Interact" },
+      "local": true,
+      "type": { "default": true, "type": "CHECKBOX" },
+      "category": "ACCESSIBILITY"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/keyboard-only-feature-menu-nav",
+    "value": {
+      "debug": false,
+      "description": { "en_US": "Enables full keyboard navigation in the {c:3}Growth Chart{c} (weapon wheel) and inside each skill tree.\n\nUse the menu arrows / WASD to move the cursor between buttons; the cursor snaps to the nearest button in the chosen direction and prefers connected skill nodes." },
+      "hidden": false,
+      "label": { "en_US": "Keyboard Menu Navigation" },
+      "local": true,
+      "type": { "default": true, "type": "CHECKBOX" },
+      "category": "ACCESSIBILITY"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/keyboard-only-mode",
+    "value": {
+      "debug": false,
+      "description": { "en_US": "Optional comfort mode for pure-keyboard play.\n\nWhen enabled:\n- The mouse cursor automatically hides after 2 seconds of inactivity (and reappears on any mouse moviment).\n- Without lock-on and without aim stance, the aim direction follows the {c:3}moviment keys{c} instead of the mouse position.\n- The camera leans slightly toward the facing direction." },
+      "hidden": false,
+      "label": { "en_US": "Keyboard-Only Aim Mode" },
+      "local": true,
+      "type": { "default": false, "type": "CHECKBOX" },
+      "category": "ACCESSIBILITY"
+    }
+  }
+]

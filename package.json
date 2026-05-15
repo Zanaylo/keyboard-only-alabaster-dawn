@@ -1,0 +1,30 @@
+{
+  "name": "keyboard-only",
+  "version": "0.1.0",
+  "description": "Comprehensive keyboard-only support for Alabaster Dawn: lock-on, aim stance , keyboard navigation in the Growth Chart, mouseless interact.",
+  "main": "dist/main.js",
+  "type": "module",
+  "scripts": {
+    "start": "project-selene-watch",
+    "build": "project-selene-build && tsx src/pack.ts",
+    "watch": "project-selene-watch",
+    "dist": "project-selene-build && tsx src/pack.ts",
+    "pack": "tsx src/pack.ts",
+    "copyassets": "project-selene-copy-assets",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Primo Zanaylo",
+  "license": "MIT",
+  "dependencies": {
+    "@project-selene/api": "*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.5.0",
+    "tsx": "^4.19.0",
+    "typescript": "~5.5.3"
+  },
+  "project-selene": {
+    "id": "98089d09-c6b2-496b-848b-38448c4b06ff",
+    "name": "Keyboard Only"
+  }
+}
