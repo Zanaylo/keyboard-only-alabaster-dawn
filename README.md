@@ -10,14 +10,14 @@ Comprehensive accessibility mod for **Alabaster Dawn** that lets you play the en
 
 ### Features
 
-| Recurso |
-| --- |
+| Feature |
+| ---|
 | **Lock-On** |
-| **Aim Stance (Tank Aim)**  |
-| **Combat Art Turn Speed** |
-| **Mouseless Interact**  |
+| **Aim Stance** |
+| **Combat Art Turn Speed** | 
+| **Mouseless Interact** |
 | **Keyboard Menu Navigation** |
-| **Keyboard-Only Aim Mode**  |
+| **Keyboard-Only Aim Mode** | 
 
 ### Settings
 
@@ -53,14 +53,14 @@ Mod abrangente de acessibilidade para **Alabaster Dawn** que permite jogar o jog
 
 ### Funcionalidades
 
-| Feature |
-| ---|
+| Recurso |
+| --- |
 | **Lock-On** |
-| **Aim Stance** |
-| **Combat Art Turn Speed** | 
-| **Mouseless Interact** |
+| **Aim Stance**  |
+| **Combat Art Turn Speed** |
+| **Mouseless Interact**  |
 | **Keyboard Menu Navigation** |
-| **Keyboard-Only Aim Mode** | 
+| **Keyboard-Only Aim Mode**  |
 
 ### Configurações
 
