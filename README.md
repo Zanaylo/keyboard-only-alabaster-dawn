@@ -10,12 +10,14 @@ Mod abrangente de acessibilidade para **Alabaster Dawn** que permite jogar o jog
 
 ### Funcionalidades
 
-- **Lock-On**
-- **Aim Stance (Tank Aim)**
-- **Combat Art Turn Speed**
-- **Mouseless Interact**
-- **Keyboard Menu Navigation**
-- **Keyboard-Only Aim Mode**
+| Recurso |
+| --- |
+| **Lock-On** |
+| **Aim Stance (Tank Aim)**  |
+| **Combat Art Turn Speed** |
+| **Mouseless Interact**  |
+| **Keyboard Menu Navigation** |
+| **Keyboard-Only Aim Mode**  |
 
 ### Configurações
 
@@ -36,7 +38,9 @@ Tudo configurável em **Options → Accessibility → Keyboard Only**:
    <steam>/steamapps/common/Alabaster Dawn/mods/
    ```
 3. Inicie o jogo com o Project Selene instalado.
-4. Selecione a pasta do Mod e inicie o jogo.
+4. Selecione a pasta do Mod e Inicie o jogo.
+
+```
 
 ### Licença
 
@@ -50,12 +54,14 @@ Comprehensive accessibility mod for **Alabaster Dawn** that lets you play the en
 
 ### Features
 
-- **Lock-On**
-- **Aim Stance (Tank Aim)**
-- **Combat Art Turn Speed**
-- **Mouseless Interact**
-- **Keyboard Menu Navigation**
-- **Keyboard-Only Aim Mode**
+| Feature |
+| ---|
+| **Lock-On** |
+| **Aim Stance** |
+| **Combat Art Turn Speed** | 
+| **Mouseless Interact** |
+| **Keyboard Menu Navigation** |
+| **Keyboard-Only Aim Mode** | 
 
 ### Settings
 
@@ -76,7 +82,7 @@ All configurable under **Options → Accessibility → Keyboard Only**:
    <steam>/steamapps/common/Alabaster Dawn/mods/
    ```
 3. Launch the game with Project Selene installed.
-4. Select the mods folder and play.
+4. Select mods folder and play
 
 ### License
 
