@@ -101,11 +101,6 @@ export default function main(mod: Mod) {
     mod.inject(KeyboardOnlyLockOn);
     installInput();
     installKbOnlyInput();
-    console.log(
-        '[keyboard-only] installed —',
-        getActionBoundKey('lockOn', 'KeyP'), '= lock-on,',
-        getActionBoundKey('aimStance', 'KeyY'), '= aim stance.'
-    );
 }
 
 export function unload() {
