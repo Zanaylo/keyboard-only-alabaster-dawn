@@ -83,12 +83,12 @@
   },
   {
     "op": "add",
-    "path": "/keyboard-only-combat-art-turn-speed",
+    "path": "/keyboard-only-divine-art-turn-speed",
     "value": {
       "debug": false,
-      "description": { "en_US": "Rotation speed of the strike direction during a Combat Art (e.g. {c:3}Vapor Thrust{c}) while locked-on.\n\nExpressed as a percentage of the maximum turn rate. Higher = snappier; lower = smoother tank-style turning. Only applies while a Combat Art is being aimed/executed with a lock-on active." },
+      "description": { "en_US": "Rotation speed of the strike direction during a Divine Art (e.g. {c:3}Vapor Thrust{c}) while locked-on.\n\nExpressed as a percentage of the maximum turn rate. Higher = snappier; lower = smoother tank-style turning. Only applies while a Divine Art is being aimed/executed with a lock-on active." },
       "hidden": false,
-      "label": { "en_US": "Combat Art Turn Speed" },
+      "label": { "en_US": "Divine Art Turn Speed" },
       "local": true,
       "type": {
         "decimals": 0,

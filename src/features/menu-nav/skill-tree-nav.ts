@@ -1,54 +1,32 @@
 import { terra } from '@project-selene/api';
-import { g_control, g_fonts, g_gui } from '@project-selene/api/terra';
+import { g_fonts, g_gui } from '@project-selene/api/terra';
 import { isMenuNavEnabled } from '../../options.js';
 import { getInputAction } from '../../utils/input.js';
-
-const MOUSE_MOVE_THRESHOLD = 12;
-
-//PQ ESSE JOGO NÃO TEM UM SISTEMA DE TECLADO PARA CHARTS KKKKKKKKKKKKKKKKKKKKKKK
+import { shouldSpoofGamepad, isZoomKeyHeld } from './gamepad-bridge.js';
+import { navKeyHeld, createStickyKeyboard } from './nav-core.js';
 
 interface NavState {
     stickyKeyboardMenu: boolean;
     skillTreeSelectPatched: boolean;
     skillTreeGraphPatched: boolean;
-    lastMouseX: number;
-    lastMouseY: number;
 }
 
 export const navState: NavState = {
     stickyKeyboardMenu: false,
     skillTreeSelectPatched: false,
     skillTreeGraphPatched: false,
-    lastMouseX: -1,
-    lastMouseY: -1,
 };
+
+const sticky = createStickyKeyboard();
 
 let origIsGamepad: any = null;
 let origGetIconFromIndex: any = null;
 let isGamepadOwner: any = null;
 let fontsOwner: any = null;
 let installed = false;
-let mousemoveHandler: ((e: MouseEvent) => void) | null = null;
 
-function isAnyMenuOpen(): boolean {
-    const scene: any = (terra as any).g_scene;
-    if (!scene) return false;
-    try {
-        if (scene.isMenu?.()) return true;
-        if (scene.isWaypointMenu?.()) return true;
-        if (scene.isCommandMenu?.()) return true;
-    } catch { }
-    return false;
-}
-
-function isMenuNavKeyHeld(): boolean {
-    return !!(
-        getInputAction('menuLeft')?.isActive?.() ||
-        getInputAction('menuRight')?.isActive?.() ||
-        getInputAction('menuUp')?.isActive?.() ||
-        getInputAction('menuDown')?.isActive?.() ||
-        getInputAction('confirm')?.isActive?.()
-    );
+function navTriggerHeld(): boolean {
+    return navKeyHeld() || isZoomKeyHeld();
 }
 
 function getMenuArrowEdge(): { dx: number; dy: number } {
@@ -77,7 +55,7 @@ function findGuiInstance(matchFn: (el: any) => boolean): any | null {
     }
     return null;
 }
-//I know and you know and we both ignore
+
 function snapAmongScreenCoords(
     items: any[],
     getCoords: (item: any) => { x: number; y: number } | null,
@@ -118,29 +96,6 @@ function centerOf(hookHolder: any): { x: number; y: number } | null {
     };
 }
 
-function patchSkillTreeSelectPrototype(proto: any): void {
-    if (!proto || proto.__keyboardOnlyPatched) return;
-    proto.__keyboardOnlyPatched = true;
-    const origHandle = proto.handleGamepadInput;
-    proto.handleGamepadInput = function (this: any) {
-        if (!isMenuNavEnabled()) return origHandle?.call(this);
-        const ctrl: any = g_control;
-        if (!ctrl) return;
-        const { dx, dy } = getMenuArrowEdge();
-        if (dx !== 0 || dy !== 0) {
-            const cur = this.currentFocus;
-            const curCoords = centerOf(cur) ?? { x: this.cursorPos.x, y: this.cursorPos.y };
-            const best = snapAmongScreenCoords(this.buttons ?? [], centerOf, dx, dy, curCoords.x, curCoords.y, cur);
-            if (best) {
-                this.cursorPos.setC(best.x, best.y);
-                this.cursorMoved = false;
-            }
-        }
-        if (this.currentFocus && ctrl.menuConfirm?.()) this.fireClickEvent(this.currentFocus);
-        this.checkHover(this.cursorPos);
-    };
-}
-
 function getConnectedNodes(graph: any, focus: any): any[] {
     if (!graph?.nodes || !focus?.config) return [];
     const ids = [
@@ -158,27 +113,42 @@ function getConnectedNodes(graph: any, focus: any): any[] {
     return out;
 }
 
+function snapCursor(
+    target: any,
+    items: any[],
+    isConnectedFn?: ((item: any) => boolean) | null
+): void {
+    const { dx, dy } = getMenuArrowEdge();
+    if (dx === 0 && dy === 0) return;
+    const cur = target.currentFocus;
+    const curCoords = centerOf(cur) ?? { x: target.cursorPos.x, y: target.cursorPos.y };
+    const best = snapAmongScreenCoords(items, centerOf, dx, dy, curCoords.x, curCoords.y, cur, isConnectedFn);
+    if (!best) return;
+    target.cursorPos.setC(best.x, best.y);
+    target.cursorMoved = false;
+}
+
+function patchSkillTreeSelectPrototype(proto: any): void {
+    if (!proto || proto.__keyboardOnlyPatched) return;
+    proto.__keyboardOnlyPatched = true;
+    const origHandle = proto.handleGamepadInput;
+    proto.handleGamepadInput = function (this: any) {
+        if (!isMenuNavEnabled()) return origHandle?.call(this);
+        snapCursor(this, this.buttons ?? []);
+        origHandle?.call(this);
+    };
+}
+
 function patchSkillTreeGraphPrototype(proto: any): void {
     if (!proto || proto.__keyboardOnlyPatched) return;
     proto.__keyboardOnlyPatched = true;
     const origHandle = proto.handleGamepadInput;
     proto.handleGamepadInput = function (this: any) {
         if (!isMenuNavEnabled()) return origHandle?.call(this);
-        const { dx, dy } = getMenuArrowEdge();
-        if (dx !== 0 || dy !== 0) {
-            const all = typeof this.nodes?.values === 'function' ? Array.from(this.nodes.values()) : [];
-            const cur = this.currentFocus;
-            const curCoords = centerOf(cur) ?? { x: this.cursorPos.x, y: this.cursorPos.y };
-            const connected = cur ? new Set(getConnectedNodes(this, cur)) : new Set();
-            const best = snapAmongScreenCoords(
-                all, centerOf, dx, dy, curCoords.x, curCoords.y, cur,
-                connected.size > 0 ? (n: any) => connected.has(n) : null
-            );
-            if (best) {
-                this.cursorPos.setC(best.x, best.y);
-                this.cursorMoved = false;
-            }
-        }
+        const all = typeof this.nodes?.values === 'function' ? Array.from(this.nodes.values()) : [];
+        const cur = this.currentFocus;
+        const connected = cur ? new Set(getConnectedNodes(this, cur)) : new Set();
+        snapCursor(this, all, connected.size > 0 ? (n: any) => connected.has(n) : null);
         origHandle?.call(this);
     };
 }
@@ -221,11 +191,12 @@ export function ensureKeyboardMenuNav(): boolean {
 
     inp.isGamepad = function () {
         if (original()) return true;
-        if (!isMenuNavEnabled() || !isAnyMenuOpen()) {
+        if (!shouldSpoofGamepad()) {
             navState.stickyKeyboardMenu = false;
             return false;
         }
-        if (isMenuNavKeyHeld()) navState.stickyKeyboardMenu = true;
+        if (navTriggerHeld()) sticky.engage();
+        navState.stickyKeyboardMenu = sticky.engaged();
         return navState.stickyKeyboardMenu;
     };
 
@@ -242,22 +213,7 @@ export function ensureKeyboardMenuNav(): boolean {
         };
     }
 
-    mousemoveHandler = (e: MouseEvent) => {
-        if (navState.lastMouseX === -1) {
-            navState.lastMouseX = e.clientX;
-            navState.lastMouseY = e.clientY;
-            return;
-        }
-        const dx = e.clientX - navState.lastMouseX;
-        const dy = e.clientY - navState.lastMouseY;
-        navState.lastMouseX = e.clientX;
-        navState.lastMouseY = e.clientY;
-        if (Math.abs(dx) + Math.abs(dy) > MOUSE_MOVE_THRESHOLD) {
-            navState.stickyKeyboardMenu = false;
-        }
-    };
-    window.addEventListener('mousemove', mousemoveHandler, true);
-
+    sticky.install();
     installed = true;
     return true;
 }
@@ -266,10 +222,7 @@ export function uninstallKeyboardMenuNav(): void {
     if (!installed) return;
     if (isGamepadOwner && origIsGamepad) isGamepadOwner.isGamepad = origIsGamepad;
     if (fontsOwner && origGetIconFromIndex) fontsOwner.getIconFromIndex = origGetIconFromIndex;
-    if (mousemoveHandler) {
-        window.removeEventListener('mousemove', mousemoveHandler, true);
-        mousemoveHandler = null;
-    }
+    sticky.uninstall();
     origIsGamepad = origGetIconFromIndex = null;
     isGamepadOwner = fontsOwner = null;
     navState.stickyKeyboardMenu = false;
@@ -278,6 +231,6 @@ export function uninstallKeyboardMenuNav(): void {
 
 export function tickSkillTreeNav(): void {
     if (!isMenuNavEnabled()) return;
-    if (!navState.skillTreeSelectPatched) tryPatchSkillTreeSelect();
-    if (!navState.skillTreeGraphPatched) tryPatchSkillTreeGraph();
+    tryPatchSkillTreeSelect();
+    tryPatchSkillTreeGraph();
 }

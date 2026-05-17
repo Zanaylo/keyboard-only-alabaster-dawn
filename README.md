@@ -14,10 +14,13 @@ Comprehensive accessibility mod for **Alabaster Dawn** that lets you play the en
 | ---|
 | **Lock-On** |
 | **Aim Stance** |
-| **Combat Art Turn Speed** | 
+| **Divine Art Turn Speed** |
 | **Mouseless Interact** |
 | **Keyboard Menu Navigation** |
-| **Keyboard-Only Aim Mode** | 
+| **Keyboard-Only Aim Mode** |
+| **Vision Mode Keyboard Navigation** |
+| **Map Keyboard Navigation & Zoom** |
+| **Keyboard Key Rebinding** |
 
 ### Settings
 
@@ -27,8 +30,15 @@ All configurable under **Options → Accessibility → Keyboard Only**:
 - Per-feature toggles
 - **Aim Stance Turn Speed**
 - **Aim-Hold Turn Speed**
-- **Combat Art Turn Speed**
+- **Divine Art Turn Speed**
 - Native **Lock-On** and **Aim Stance** keybinds under **Gameplay → Mouse & Keyboard → Keyboard Only**
+
+### Keyboard-only navigation
+
+- **Growth Chart**: snap between skill nodes with the menu/arrow keys; hold confirm to learn.
+- **Vision Mode**: move the inspect cursor with WASD/arrows and select objects with confirm — no mouse needed; the cursor indicator follows the keyboard.
+- **World Map**: pan with WASD/arrows, zoom with `+` / `-`, select map objects with confirm.
+- **Controls menu**: navigate the bindings list and rebind any key fully from the keyboard (press confirm on a row to start rebinding).
 
 ### Install
 
@@ -44,7 +54,6 @@ All configurable under **Options → Accessibility → Keyboard Only**:
 
 MIT.
 
-
 ---
 
 ## Português
@@ -56,11 +65,14 @@ Mod abrangente de acessibilidade para **Alabaster Dawn** que permite jogar o jog
 | Recurso |
 | --- |
 | **Lock-On** |
-| **Aim Stance**  |
-| **Combat Art Turn Speed** |
-| **Mouseless Interact**  |
+| **Aim Stance** |
+| **Divine Art Turn Speed** |
+| **Mouseless Interact** |
 | **Keyboard Menu Navigation** |
-| **Keyboard-Only Aim Mode**  |
+| **Keyboard-Only Aim Mode** |
+| **Navegação do Vision Mode por Teclado** |
+| **Navegação e Zoom do Mapa por Teclado** |
+| **Rebind de Teclas pelo Teclado** |
 
 ### Configurações
 
@@ -70,8 +82,15 @@ Tudo configurável em **Options → Accessibility → Keyboard Only**:
 - Liga/desliga de cada feature individualmente
 - **Aim Stance Turn Speed**
 - **Aim-Hold Turn Speed**
-- **Combat Art Turn Speed**
+- **Divine Art Turn Speed**
 - Keybinds nativos do **Lock-On** e **Aim Stance** em **Gameplay → Mouse & Keyboard → Keyboard Only**
+
+### Navegação só por teclado
+
+- **Growth Chart**: pula entre os nós de skill com as teclas de menu/setas; segure o confirm para aprender.
+- **Vision Mode**: move o cursor de inspeção com WASD/setas e seleciona objetos com o confirm — sem mouse; o indicador do cursor segue o teclado.
+- **Mapa**: move com WASD/setas, zoom com `+` / `-`, seleciona objetos do mapa com o confirm.
+- **Menu de Controles**: navega a lista de keybinds e troca qualquer tecla 100% pelo teclado (aperte confirm na linha para iniciar o rebind).
 
 ### Como instalar
 
@@ -86,4 +105,3 @@ Tudo configurável em **Options → Accessibility → Keyboard Only**:
 ### Licença
 
 MIT.
-

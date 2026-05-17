@@ -3,10 +3,10 @@ import { lockState } from '../lock-on/lock-on.js';
 import { tankState, ensureSmoothAimDirInited, updateSmoothAimDir, applyAimDirOverride, setTurnSpeedForNextUpdate, resetSmoothAimToFace } from '../tank-aim/tank-aim.js';
 import { getPlayerCmp, getPlayerState, PLAYER_STATE } from '../../utils/player.js';
 import { getCurrentMoveDir } from '../../utils/input.js';
-import { getCombatArtTurnSpeed } from '../../options.js';
+import { getDivineArtTurnSpeed } from '../../options.js';
 
 let lastTickMs = 0;
-let wasInCombatArt = false;
+let wasInDivineArt = false;
 
 function redirectControlDir(player: any, x: number, y: number): void {
     if (!player?.controlDir?.setC) return;
@@ -60,11 +60,11 @@ function installWeaponActionWrap(): boolean {
     return true;
 }
 
-export function ensureCombatArtFaceWrap(): boolean {
+export function ensureDivineArtFaceWrap(): boolean {
     return installStartMeleeActionWrap() && installWeaponActionWrap();
 }
 
-export function uninstallCombatArtFaceWrap(): void {
+export function uninstallDivineArtFaceWrap(): void {
     const proto1: any = (PlayerCmp as any)?.prototype;
     if (proto1 && origStartMeleeAction) {
         proto1.startMeleeAction = origStartMeleeAction;
@@ -82,28 +82,28 @@ export function uninstallCombatArtFaceWrap(): void {
     weaponActionWrapInstalled = false;
 }
 
-function isInCombatArt(player: any): boolean {
+function isInDivineArt(player: any): boolean {
     return player?.inputBuffer?.chargeMove === true;
 }
 
-export function preTickCombatArtRedirect(): void {
+export function preTickDivineArtRedirect(): void {
     if (tankState.active) {
-        wasInCombatArt = false;
+        wasInDivineArt = false;
         return;
     }
     if (getPlayerState() === PLAYER_STATE.AIMING) {
-        wasInCombatArt = false;
+        wasInDivineArt = false;
         return;
     }
 
     const player = getPlayerCmp();
     const locked = !!lockState.entity;
-    const inCombatArt = isInCombatArt(player);
+    const inDivineArt = isInDivineArt(player);
 
-    if (inCombatArt && !wasInCombatArt) resetSmoothAimToFace();
-    wasInCombatArt = inCombatArt;
+    if (inDivineArt && !wasInDivineArt) resetSmoothAimToFace();
+    wasInDivineArt = inDivineArt;
 
-    if (!locked && !inCombatArt) return;
+    if (!locked && !inDivineArt) return;
     if (!getCurrentMoveDir()) return;
 
     const now = performance.now();
@@ -111,12 +111,10 @@ export function preTickCombatArtRedirect(): void {
     lastTickMs = now;
 
     ensureSmoothAimDirInited();
-    setTurnSpeedForNextUpdate(getCombatArtTurnSpeed());
+    setTurnSpeedForNextUpdate(getDivineArtTurnSpeed());
     updateSmoothAimDir(dt);
     if (locked) applyAimDirOverride();
 
     const sd = tankState.smoothAimDir;
     redirectControlDir(player, sd.x, sd.y);
 }
-
-//tentei não consigo fazer os speeds serem o mesmo, vou deixar assim por enquanto depois eu melhoro esse sistema.

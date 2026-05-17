@@ -6,36 +6,38 @@ import { debugDump, inspectEntry } from './features/lock-on/enemy-query.js';
 import { ensureInteractWrap, uninstallInteractWrap } from './features/interact/interact.js';
 import { setTankHeld, preTickTankAim, tickTankAim, tankState, ensureTankAimHooks, uninstallTankAimHooks } from './features/tank-aim/tank-aim.js';
 import { ensureKeyboardMenuNav, uninstallKeyboardMenuNav, tickSkillTreeNav, navState } from './features/menu-nav/skill-tree-nav.js';
+import { ensureGamepadBridge, uninstallGamepadBridge, installZoomKeys, uninstallZoomKeys } from './features/menu-nav/gamepad-bridge.js';
+import { ensureMenuExtra, installMenuExtra, uninstallMenuExtra } from './features/menu-nav/menu-extra.js';
 import { preTickKbOnly, installKbOnlyInput, uninstallKbOnlyInput, isKeyboardOnlyMode, setKeyboardOnlyOverride } from './features/keyboard-only/keyboard-only-mode.js';
-import { ensureCombatArtFaceWrap, uninstallCombatArtFaceWrap, preTickCombatArtRedirect } from './features/combat-art/combat-art.js';
+import { ensureDivineArtFaceWrap, uninstallDivineArtFaceWrap, preTickDivineArtRedirect } from './features/divine-arts/divine-arts.js';
 import { enterTrainingMode, listEnemies } from './features/training/training-mode.js';
 import { isModEnabled, isLockOnEnabled, isAimStanceEnabled } from './options.js';
 import { ensureCustomActionsRegistered, actionMatchesEventCode, getActionBoundKey } from './input/register-actions.js';
 
 const ENSURE_HOOKS = [
     ensureCustomActionsRegistered,
-    ensureCombatArtFaceWrap,
+    ensureDivineArtFaceWrap,
     ensureUpdateTargetHook,
     ensureSetCursorPosWrap,
     ensureAimTargetHudWrap,
     ensureInteractWrap,
     ensureTankAimHooks,
     ensureKeyboardMenuNav,
+    ensureGamepadBridge,
+    ensureMenuExtra,
 ];
 
-// precisa de melhorias apra depois
 class KeyboardOnlyLockOn extends Injectable(Game) {
     update() {
         try {
             for (const ensure of ENSURE_HOOKS) ensure();
             preTickKbOnly();
             if (g_scene?.isRunning?.()) {
-                preTickCombatArtRedirect();
+                preTickDivineArtRedirect();
                 preTickTankAim();
             }
             tickSkillTreeNav();
         } catch (err) {
-            // console.error('[keyboard-only] pre-tick error', err);
         }
 
         const r = super.update();
@@ -46,7 +48,6 @@ class KeyboardOnlyLockOn extends Injectable(Game) {
                 tickTankAim();
             }
         } catch (err) {
-            // console.error('[keyboard-only] post-tick error', err);
         }
         return r;
     }
@@ -101,17 +102,22 @@ export default function main(mod: Mod) {
     mod.inject(KeyboardOnlyLockOn);
     installInput();
     installKbOnlyInput();
+    installZoomKeys();
+    installMenuExtra();
 }
 
 export function unload() {
     uninstallInput();
     uninstallKbOnlyInput();
+    uninstallZoomKeys();
+    uninstallGamepadBridge();
+    uninstallMenuExtra();
     uninstallUpdateTargetHook();
     uninstallSetCursorPosWrap();
     uninstallAimTargetHudWrap();
     uninstallInteractWrap();
     uninstallTankAimHooks();
     uninstallKeyboardMenuNav();
-    uninstallCombatArtFaceWrap();
+    uninstallDivineArtFaceWrap();
     clearLock();
 }
